@@ -6,6 +6,24 @@ const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const root = document.documentElement;
 root.classList.add("js");
 
+const menu = $("#menu"), links = $("#links");
+if (menu && links) {
+  const setMenuOpen = open => {
+    menu.setAttribute("aria-expanded", String(open));
+    links.classList.toggle("open", open);
+  };
+  menu.addEventListener("click", () => setMenuOpen(menu.getAttribute("aria-expanded") !== "true"));
+  links.addEventListener("click", e => {
+    if (e.target.closest("a")) setMenuOpen(false);
+  });
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape" && menu.getAttribute("aria-expanded") === "true") {
+      setMenuOpen(false);
+      menu.focus();
+    }
+  });
+}
+
 // Headlines: words rise in one by one
 $$("h1.split").forEach(h => {
   h.innerHTML = h.textContent.trim().split(/\s+/).map((w, i) => `<span class="w" style="--i:${i}">${w}</span>`).join(" ");
