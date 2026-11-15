@@ -62,7 +62,7 @@ if (seg && lists.length) {
   }));
 }
 
-// Contact form: sends the message to Team Jareh's inbox through EmailJS
+// Contact form: sends the message to the Resume Cubicle inbox through EmailJS
 const form = $("#form"), note = $("#note"), send = $("#send");
 if (form) {
   form.addEventListener("submit", async e => {
@@ -87,7 +87,7 @@ if (form) {
       });
       if (!res.ok) throw new Error(res.status);
       form.reset();
-      note.textContent = "Thank you, your message has been sent. Team Jareh will reply to the email you gave.";
+      note.textContent = "Thank you, your message has been sent. Resume Cubicle will reply to the email you gave.";
     } catch (err) {
       note.textContent = "Sorry, your message didn’t send. Please check your connection and try again.";
     }
