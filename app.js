@@ -83,6 +83,11 @@ if (seg && lists.length) {
 // Contact form: sends the message to the Resume Cubicle inbox through EmailJS
 const form = $("#form"), note = $("#note"), send = $("#send");
 if (form) {
+  const service = $('select[name="service"]', form);
+  const requestedService = new URLSearchParams(location.search).get("service");
+  if (service && requestedService && [...service.options].some(option => option.value === requestedService)) {
+    service.value = requestedService;
+  }
   form.addEventListener("submit", async e => {
     e.preventDefault();
     if (!form.reportValidity()) return;

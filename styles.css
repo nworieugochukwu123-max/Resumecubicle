@@ -65,6 +65,14 @@ h3{font-size:clamp(22px,3vw,30px);letter-spacing:-.02em;line-height:1.15;margin-
 .card h3{font-size:22px}
 .card p{color:var(--mute)}
 .card .list{margin-top:16px}
+.executive{max-width:1100px;margin:40px auto 0;padding-top:72px;border-top:1px solid var(--line)}
+.executive h2,.executive>.eyebrow,.executive>.sub,.executive>.fine{margin-left:20px;margin-right:20px}
+.executive h2{max-width:15em}
+.executive>.sub{max-width:36em}
+.executive .grid3{padding:0 20px}
+.executive .card{display:flex;flex-direction:column;align-items:flex-start}
+.executive .card .more{margin-top:auto;padding-top:22px}
+.executive>.fine{margin-top:24px}
 .list{list-style:none;padding:0;display:grid;gap:10px}
 .list li{display:flex;gap:12px;color:var(--ink)}
 .list li::before{content:"";flex:none;width:6px;height:6px;margin-top:.62em;border-radius:50%;background:var(--ac2)}
@@ -222,6 +230,9 @@ footer{margin-top:140px;border-top:1px solid var(--line);padding:56px 20px 40px;
 .chip{padding:7px 11px;font-size:12px}
 .c1{top:22px;left:12px}.c2{top:22px;right:10px}.c3{top:267px;left:16px}
 .tile-photo{height:124px}
+.executive{margin:24px 20px 0;padding-top:56px}
+.executive h2,.executive>.eyebrow,.executive>.sub,.executive>.fine{margin-left:0;margin-right:0}
+.executive .grid3{padding:0}
 }
 @media(prefers-reduced-motion:reduce){
 *{animation:none!important;transition:none!important}
