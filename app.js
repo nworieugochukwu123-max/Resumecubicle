@@ -1,5 +1,5 @@
 // EDIT THESE: your EmailJS service ID, template ID and public key, plus your email, LinkedIn and Fiverr links
-const CONFIG = { emailjsService: "YOUR_SERVICE_ID", emailjsTemplate: "YOUR_TEMPLATE_ID", emailjsKey: "YOUR_PUBLIC_KEY", email: "hello@resumecubicle.com", linkedin: "https://www.linkedin.com/in/your-profile", fiverr: "https://www.fiverr.com/your-username" };
+const CONFIG = { emailjsService: "service_1oeg45f", emailjsTemplate: "template_hpqic5m", emailjsKey: "wqiACUB58PiWA85Ne", email: "inquiries@resumecubicle.com", linkedin: "https://www.linkedin.com/in/your-profile", fiverr: "https://www.fiverr.com/your-username" };
 
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -70,7 +70,7 @@ if (form) {
     if (!form.reportValidity()) return;
     const f = new FormData(form);
     if (f.get("website")) return; // spam trap: real visitors never see this field
-    if (CONFIG.emailjsKey.startsWith("YOUR")) {
+    if ([CONFIG.emailjsService, CONFIG.emailjsTemplate, CONFIG.emailjsKey].some(v => v.startsWith("YOUR"))) {
       note.textContent = "Messaging isn’t connected yet. Add your EmailJS details at the top of app.js.";
       return;
     }
@@ -85,7 +85,11 @@ if (form) {
           template_params: { from_name: f.get("name").trim(), from_email: email, reply_to: email, service: f.get("service"), message: (f.get("msg") || "").trim() || "(No message text)" }
         })
       });
-      if (!res.ok) throw new Error(res.status);
+      if (!res.ok) {
+        const reason = await res.text();
+        console.error("EmailJS error " + res.status + ": " + reason);
+        throw new Error(res.status);
+      }
       form.reset();
       note.textContent = "Thank you, your message has been sent. Resume Cubicle will reply to the email you gave.";
     } catch (err) {
@@ -94,16 +98,3 @@ if (form) {
     send.disabled = false; send.textContent = "Send message";
   });
 }
-
-// Contact links (header-free: they appear in the footer and on the contact page)
-$$("[data-link=email]").forEach(a => a.href = "mailto:" + CONFIG.email);
-$$("[data-link=linkedin]").forEach(a => a.href = CONFIG.linkedin);
-$$("[data-link=fiverr]").forEach(a => a.href = CONFIG.fiverr);
-
-// Mobile menu and footer year
-const menu = $("#menu"), links = $("#links");
-if (menu && links) {
-  menu.addEventListener("click", () => menu.setAttribute("aria-expanded", links.classList.toggle("open")));
-  $$("a", links).forEach(a => a.addEventListener("click", () => { links.classList.remove("open"); menu.setAttribute("aria-expanded", false); }));
-}
-$$("[data-year]").forEach(el => el.textContent = new Date().getFullYear());
